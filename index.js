@@ -4,6 +4,8 @@ const closeBtn = document.getElementById("modal-close-btn")
 const consentForm = document.getElementById("consent-form")
 const modalText = document.getElementById("modal-text")
 const modalInner = document.getElementById("modal-inner")
+const declineBtn = document.getElementById("decline-btn")
+const buttons = document.getElementById("modal-choice-btns")
 
 setTimeout( () => {
     modal.style.display = "inline"
@@ -15,6 +17,9 @@ closeBtn.addEventListener("click", function(){
 
 consentForm.addEventListener("submit", function(e) {
     e.preventDefault()
+
+    const formData = new FormData(consentForm)
+    const userName = formData.get("userName") 
 
     modalText.innerHTML = `
     <div id="modal-inner-loading" class="modal-inner-loading">
@@ -29,10 +34,16 @@ consentForm.addEventListener("submit", function(e) {
 
     setTimeout(() => {
         modalInner.innerHTML = `
-            <h2>Thanks you sucker! </h2>
+            <h2>Thanks <span class="modal-display-name">${userName}</span>, you sucker! </h2>
             <p>We just sold the rights to your eternal soul.</p>
             <div class="idiot-gif">
             <img src="pirate.gif">
             </div>`
+        closeBtn.disabled = false
     },3000)
+
+})
+
+declineBtn.addEventListener("mouseenter", function() {
+    buttons.classList.toggle("switch")
 })
